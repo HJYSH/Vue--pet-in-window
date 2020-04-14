@@ -40,7 +40,6 @@
     * 2，获取鼠标对应的坐标，这里使用document.onmousemove=function() {}为鼠标
     * 添加移动事件获取当前的鼠标在屏幕上的位置。即：x = e.pageX,y = e.pageY,但是Ie浏览器不兼容，
     * 3. 同样要获取box内的某一点的位置（这里取box盒子的中心点），然后和鼠标点一起，使用反三角函数计算出旋转角度，添加box的动态效果
-    * 4. 节流或者抖动
     * */
 
     new Vue({
@@ -60,15 +59,8 @@
                 this.left = e.pageX ;
                 this.top = e.pageY;
             },
-            // 节流
-            debounce(e) {
-                let vaild = true;
-                if(!vaild){
-                    // 休息时间，暂不执行
-                    return false
-                }
-                // 工作时间执行函数并且在间隔期内把位状态设置为无效——vaild = false
-                vaild = false;
+            // 通过延时器获得一个动画效果
+            auto(e) {
                 setTimeout(()=>{
                     this.move(e);
                     vaild = true
@@ -93,7 +85,7 @@
         },
         mounted () {
             // 添加鼠标移动事件
-            document.onmousemove = this.debounce
+            document.onmousemove = this.auto
         }
     })
 </script>
